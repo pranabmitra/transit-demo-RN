@@ -1,0 +1,466 @@
+{
+   "geocoded_waypoints" : [
+      {
+         "geocoder_status" : "OK",
+         "place_id" : "ChIJY59JsLmPGGARvAgWhRi60RQ",
+         "types" : [ "political", "sublocality", "sublocality_level_4" ]
+      },
+      {
+         "geocoder_status" : "OK",
+         "place_id" : "ChIJHxd2zl6JGGARN-9NkMzyR3Y",
+         "types" : [ "establishment", "point_of_interest" ]
+      }
+   ],
+   "routes" : [
+      {
+         "bounds" : {
+            "northeast" : {
+               "lat" : 35.7620438,
+               "lng" : 139.8258011
+            },
+            "southwest" : {
+               "lat" : 35.6500281,
+               "lng" : 139.7448262
+            }
+         },
+         "copyrights" : "Map data ©2018 Google, ZENRIN",
+         "legs" : [
+            {
+               "distance" : {
+                  "text" : "18.5 km",
+                  "value" : 18462
+               },
+               "duration" : {
+                  "text" : "26 mins",
+                  "value" : 1581
+               },
+               "end_address" : "5 Chome-1-13 Shiba, Minato, Tokyo 105-0014, Japan",
+               "end_location" : {
+                  "lat" : 35.6500372,
+                  "lng" : 139.7448262
+               },
+               "start_address" : "3 Chome-1 Ayase, Adachi, Tokyo 120-0005, Japan",
+               "start_location" : {
+                  "lat" : 35.7620438,
+                  "lng" : 139.8258011
+               },
+               "steps" : [
+                  {
+                     "distance" : {
+                        "text" : "0.2 km",
+                        "value" : 151
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 57
+                     },
+                     "end_location" : {
+                        "lat" : 35.7618783,
+                        "lng" : 139.8241446
+                     },
+                     "html_instructions" : "Head \u003cb\u003ewest\u003c/b\u003e",
+                     "polyline" : {
+                        "points" : "wwgyEgvltYHdB@TRnE"
+                     },
+                     "start_location" : {
+                        "lat" : 35.7620438,
+                        "lng" : 139.8258011
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "1.0 km",
+                        "value" : 990
+                     },
+                     "duration" : {
+                        "text" : "3 mins",
+                        "value" : 185
+                     },
+                     "end_location" : {
+                        "lat" : 35.7530371,
+                        "lng" : 139.8235887
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eleft\u003c/b\u003e",
+                     "maneuver" : "turn-left",
+                     "polyline" : {
+                        "points" : "wvgyE{kltYj@KVCT?dBNvAH|@Hp@BhCJrBPdAHp@FdCRlDZbBPnANX@f@@h@@b@?^@|@ElEa@^Gd@C"
+                     },
+                     "start_location" : {
+                        "lat" : 35.7618783,
+                        "lng" : 139.8241446
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.1 km",
+                        "value" : 102
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 18
+                     },
+                     "end_location" : {
+                        "lat" : 35.7521297,
+                        "lng" : 139.8237252
+                     },
+                     "html_instructions" : "Continue straight",
+                     "maneuver" : "straight",
+                     "polyline" : {
+                        "points" : "o_fyEmhltYdBQnAI"
+                     },
+                     "start_location" : {
+                        "lat" : 35.7530371,
+                        "lng" : 139.8235887
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.1 km",
+                        "value" : 145
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 28
+                     },
+                     "end_location" : {
+                        "lat" : 35.7523889,
+                        "lng" : 139.8253045
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eleft\u003c/b\u003e toward \u003cb\u003e平和橋通り\u003c/b\u003e/\u003cb\u003e都道308号線\u003c/b\u003e",
+                     "maneuver" : "turn-left",
+                     "polyline" : {
+                        "points" : "yyeyEiiltYK_Ag@yF"
+                     },
+                     "start_location" : {
+                        "lat" : 35.7521297,
+                        "lng" : 139.8237252
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.2 km",
+                        "value" : 206
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 51
+                     },
+                     "end_location" : {
+                        "lat" : 35.7505467,
+                        "lng" : 139.8254865
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e toward \u003cb\u003e平和橋通り\u003c/b\u003e/\u003cb\u003e都道308号線\u003c/b\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "m{eyEcsltYrAInAOfACt@Ep@AZ?"
+                     },
+                     "start_location" : {
+                        "lat" : 35.7523889,
+                        "lng" : 139.8253045
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "15 m",
+                        "value" : 15
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 3
+                     },
+                     "end_location" : {
+                        "lat" : 35.75063,
+                        "lng" : 139.8253502
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e onto \u003cb\u003e平和橋通り\u003c/b\u003e/\u003cb\u003e都道308号線\u003c/b\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "}oeyEitltYOZ"
+                     },
+                     "start_location" : {
+                        "lat" : 35.7505467,
+                        "lng" : 139.8254865
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.3 km",
+                        "value" : 329
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 38
+                     },
+                     "end_location" : {
+                        "lat" : 35.7520095,
+                        "lng" : 139.8222481
+                     },
+                     "html_instructions" : "Take the ramp on the \u003cb\u003eright\u003c/b\u003e to \u003cb\u003e首都高速中央環状線\u003c/b\u003e\u003cdiv style=\"font-size:0.9em\"\u003eToll road\u003c/div\u003e",
+                     "polyline" : {
+                        "points" : "mpeyEmsltYiAtBgBdD{@`BSh@Kn@Gd@A`@?VBr@"
+                     },
+                     "start_location" : {
+                        "lat" : 35.75063,
+                        "lng" : 139.8253502
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.7 km",
+                        "value" : 742
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 45
+                     },
+                     "end_location" : {
+                        "lat" : 35.7462786,
+                        "lng" : 139.82276
+                     },
+                     "html_instructions" : "Follow signs for \u003cb\u003e小菅料金所\u003c/b\u003e and merge onto \u003cb\u003e首都高速中央環状線\u003c/b\u003e\u003cdiv style=\"font-size:0.9em\"\u003eToll road\u003c/div\u003e",
+                     "polyline" : {
+                        "points" : "ayeyEa`ltYF`CDVDNFLHJNLDBFBRFd@BvALrCGH?h@En@Eh@Kv@Qb@Kv@Wd@Op@YfAc@zCsAj@UdCkA"
+                     },
+                     "start_location" : {
+                        "lat" : 35.7520095,
+                        "lng" : 139.8222481
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.5 km",
+                        "value" : 492
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 25
+                     },
+                     "end_location" : {
+                        "lat" : 35.7431124,
+                        "lng" : 139.8204877
+                     },
+                     "html_instructions" : "Take exit \u003cb\u003e堀切ＪＣＴ\u003c/b\u003e on the \u003cb\u003eright\u003c/b\u003e toward \u003cb\u003e銀座\u003c/b\u003e\u003cdiv style=\"font-size:0.9em\"\u003eToll road\u003c/div\u003e",
+                     "maneuver" : "ramp-right",
+                     "polyline" : {
+                        "points" : "gudyEgcltYj@QvCaAv@Ef@Bd@Fb@P\\V^\\Zb@`@`A^dA`AhDl@tB"
+                     },
+                     "start_location" : {
+                        "lat" : 35.7462786,
+                        "lng" : 139.82276
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "8.7 km",
+                        "value" : 8689
+                     },
+                     "duration" : {
+                        "text" : "8 mins",
+                        "value" : 481
+                     },
+                     "end_location" : {
+                        "lat" : 35.6808865,
+                        "lng" : 139.7809705
+                     },
+                     "html_instructions" : "Continue onto \u003cb\u003e首都高速6号向島線\u003c/b\u003e\u003cdiv style=\"font-size:0.9em\"\u003eToll road\u003c/div\u003e",
+                     "polyline" : {
+                        "points" : "madyEauktYNj@lB~G^vAFRj@hBTj@Xb@r@r@t@h@~DnCNJj@XXL\\LTJXF`@HXBVB\\@`@BR?`@Ch@Cx@Ez@Ep@?f@Dn@F`@H\\Fn@Pz@Zj@Xv@X\\NXNh@Z~@p@p@d@XXVXj@n@v@`ApArAd@b@\\\\ZVXTXNZP^PfDpAf@P|Af@jBj@dBZfBTdEXfBLtG`@r@DpCNdCJ`AHjAL|@Np@HbDj@hEt@~Ez@lB\\zCj@J@v@T~@Vf@RHDhAj@tBrAhBvAlBfBnBjBx@z@jBjBbBfB~CjDrBvB~AdBRX^f@^n@b@|@`@fAn@~A^r@Vb@X`@RZ^`@`@^^^dAz@|ApA~EpD|B`B^TZRVLfAj@hAb@~Ap@~B`Aj@TxCfBzCpBn@^`Af@nAf@vAd@xA`@xC`AjB|@pFjCfAn@xIrG~C|CdA`AbBlA`Af@p@XnA^~@Rv@LPB`AJv@B`@?\\A\\AbAId@C`@G\\Ch@En@Gj@A^@\\DPDHBXT^f@t@~@^\\\\TZHZ@`@A^M`@UlA}@pC{BXS\\a@Xa@b@q@^m@Xc@`@c@NODCj@g@n@c@fAo@ZO^I`@E\\A^DTFXL^TPNrErG`AtAtApBx@lAXd@f@|@tApDv@vBfA|Cl@|Ad@vAb@fAd@pAXt@Xr@p@dBV|@HZD\\Fl@?d@Cd@Gd@Qh@GTOTy@bAgAjA"
+                     },
+                     "start_location" : {
+                        "lat" : 35.7431124,
+                        "lng" : 139.8204877
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.6 km",
+                        "value" : 635
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 43
+                     },
+                     "end_location" : {
+                        "lat" : 35.6819604,
+                        "lng" : 139.7773457
+                     },
+                     "html_instructions" : "Take exit \u003cb\u003e江戸橋ＪＣＴ\u003c/b\u003e toward \u003cb\u003e銀座・横浜\u003c/b\u003e\u003cdiv style=\"font-size:0.9em\"\u003eToll road\u003c/div\u003e",
+                     "maneuver" : "ramp-left",
+                     "polyline" : {
+                        "points" : "q|wxEa~ctYc@r@u@t@o@j@y@`@i@NODWFiCb@w@P]PWROTKXIr@@\\H^P\\`@b@XTn@\\^\\rDjB"
+                     },
+                     "start_location" : {
+                        "lat" : 35.6808865,
+                        "lng" : 139.7809705
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "4.8 km",
+                        "value" : 4774
+                     },
+                     "duration" : {
+                        "text" : "5 mins",
+                        "value" : 282
+                     },
+                     "end_location" : {
+                        "lat" : 35.6530092,
+                        "lng" : 139.749269
+                     },
+                     "html_instructions" : "Merge onto \u003cb\u003e首都高速都心環状線\u003c/b\u003e\u003cdiv style=\"font-size:0.9em\"\u003eToll road\u003c/div\u003e",
+                     "maneuver" : "merge",
+                     "polyline" : {
+                        "points" : "gcxxEmgctYdCrAxFrC~@`@fE`CrBbA^NhE~BjDdBrFtCx@`@f@VNFVBt@@T@v@Bn@Bh@JrDv@j@LnAd@|@d@`@LJHNLPNv@|@pA~Ar@z@BBb@l@NRRTl@x@FHt@`An@t@`AlAVZh@n@f@l@j@p@NLPH\\Bb@F|@H\\JPJPPZ`@lBjCdB|B`BxAhAdAh@j@PRPTJRJRL\\Rl@Pf@Tv@Np@Ph@P^Xf@LTlAlArAdAdD`CfAv@|@r@HHzAdAjAx@jAx@RLTJ^FV@XAVEXIVMv@c@v@c@XMPCTAd@?|@@zAAzA?v@?b@?hB?dB?lBAz@@l@?TBZFF@NBNHNHD@HHJLJLJLJTFTH^D\\@`@?t@MbDGhBCr@MxCCp@IxBIbBGtAItAKnAS|BQfBMhAU`CEd@Cp@Bd@Bl@Ld@Tr@`@dAPf@Fd@Hx@"
+                     },
+                     "start_location" : {
+                        "lat" : 35.6819604,
+                        "lng" : 139.7773457
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.2 km",
+                        "value" : 228
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 20
+                     },
+                     "end_location" : {
+                        "lat" : 35.6529075,
+                        "lng" : 139.7469395
+                     },
+                     "html_instructions" : "Take exit \u003cb\u003e首都高芝公園\u003c/b\u003e toward \u003cb\u003e芝公園出口\u003c/b\u003e\u003cdiv style=\"font-size:0.9em\"\u003eToll road\u003c/div\u003e",
+                     "maneuver" : "ramp-left",
+                     "polyline" : {
+                        "points" : "inrxE}w}sYDl@?p@KhBElAGt@Cj@CR?RBPJNLFPD"
+                     },
+                     "start_location" : {
+                        "lat" : 35.6530092,
+                        "lng" : 139.749269
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.2 km",
+                        "value" : 248
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 76
+                     },
+                     "end_location" : {
+                        "lat" : 35.6526203,
+                        "lng" : 139.7496098
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eleft\u003c/b\u003e toward \u003cb\u003e日比谷通り\u003c/b\u003e/\u003cb\u003e都道409号線\u003c/b\u003e (signs for \u003cb\u003e日比谷・金杉橋・品川\u003c/b\u003e)",
+                     "maneuver" : "turn-left",
+                     "polyline" : {
+                        "points" : "umrxEki}sYl@sCRwCDqB?k@MkA"
+                     },
+                     "start_location" : {
+                        "lat" : 35.6529075,
+                        "lng" : 139.7469395
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.3 km",
+                        "value" : 291
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 62
+                     },
+                     "end_location" : {
+                        "lat" : 35.6500281,
+                        "lng" : 139.749178
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e at \u003cb\u003e芝園橋（交差点）\u003c/b\u003e onto \u003cb\u003e日比谷通り\u003c/b\u003e/\u003cb\u003e都道409号線\u003c/b\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "{krxEaz}sYvAJx@FjALhBRr@HhCT"
+                     },
+                     "start_location" : {
+                        "lat" : 35.6526203,
+                        "lng" : 139.7496098
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "0.4 km",
+                        "value" : 392
+                     },
+                     "duration" : {
+                        "text" : "2 mins",
+                        "value" : 148
+                     },
+                     "end_location" : {
+                        "lat" : 35.6503335,
+                        "lng" : 139.7448603
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e at \u003cb\u003e芝３丁目（交差点）\u003c/b\u003e toward \u003cb\u003e桜田通り\u003c/b\u003e/\u003cb\u003e国道1号線\u003c/b\u003e",
+                     "maneuver" : "turn-right",
+                     "polyline" : {
+                        "points" : "u{qxEkw}sY?`AGnCIvBEr@GjA?VCp@EjA?NEt@AVCl@ErB"
+                     },
+                     "start_location" : {
+                        "lat" : 35.6500281,
+                        "lng" : 139.749178
+                     },
+                     "travel_mode" : "DRIVING"
+                  },
+                  {
+                     "distance" : {
+                        "text" : "33 m",
+                        "value" : 33
+                     },
+                     "duration" : {
+                        "text" : "1 min",
+                        "value" : 19
+                     },
+                     "end_location" : {
+                        "lat" : 35.6500372,
+                        "lng" : 139.7448262
+                     },
+                     "html_instructions" : "Turn \u003cb\u003eleft\u003c/b\u003e at \u003cb\u003e三田通り交番前（交差点）\u003c/b\u003e onto \u003cb\u003e桜田通り\u003c/b\u003e/\u003cb\u003e国道1号線\u003c/b\u003e",
+                     "maneuver" : "turn-left",
+                     "polyline" : {
+                        "points" : "q}qxEk||sYx@D"
+                     },
+                     "start_location" : {
+                        "lat" : 35.6503335,
+                        "lng" : 139.7448603
+                     },
+                     "travel_mode" : "DRIVING"
+                  }
+               ],
+               "traffic_speed_entry" : [],
+               "via_waypoint" : []
+            }
+         ],
+         "overview_polyline" : {
+            "points" : "wwgyEgvltYJzBRnEj@Kl@C|DXnBLhCJrBPvBPrHn@rD`@`ABlA@^@|@ElFi@jCUnAIK_Ag@yFrAInAOfACfBGZ?OZqDzG{@`BSh@StAAx@JtDJf@PXTPZJ|BP|CGxAK`B]zAc@vAi@tKyEbEsAv@Ef@Bd@Fb@P|@t@Zb@`@`A^dA`AhD|@`DlCvJr@|BTj@Xb@r@r@t@h@nEzCdAf@r@Xz@Pp@F~@Dt@CbBIlBEvAL~@PjBl@bBr@v@^hBlAjA~@bAhAv@`ApArAbA`At@l@t@`@fEbBdCx@jBj@dBZfBTdEX|Jn@dETfEThC\\tEt@hLpBhGhAbAVfBj@rAp@tBrAhBvA|ErEdDfDbBfB~CjDrE|Er@`AbAlBpAfDv@vAl@|@`A`AdBzA|ApA~EpD|CvBr@`@fAj@hAb@~ErBj@TxCfBjEpCpCnApDfAxC`AjB|@pFjCfAn@xIrG~C|CdA`AbBlArB`AnCr@hAPxBN~@A`BKfAKfAIzAI|@FZHXT^f@t@~@^\\\\TZH|@?`Ac@~EyDXS\\a@|@sAx@qAp@s@p@k@vBsAZO^I~@G^DTFx@b@PNrErGvCfErArBf@|@tApD~BtGrAtD|BbGp@dBV|@Nx@Fl@?d@KjAY~@iAxAgAjAc@r@eB`By@`@i@Ng@LaEt@u@d@[n@Ir@@\\Z|@z@x@n@\\^\\xH~DxHtDfE`CrBbAhFnC~KzF`Bx@f@JrDJ|EbAj@LnAd@|@d@`@LZVhAlAdCzCjAzAt@bAdBvBjDfEz@~@PH\\B`BPn@Vl@r@rEhGjD~Cz@~@\\h@Xp@d@tAd@hBb@hAf@|@lAlArAdAlFxDfA|@fD~B~AfAt@Rp@?p@O`DcBf@EbB@rGAxJ?l@?TBb@H^LTJl@r@Rj@N|@@vAUlG_@xJQxDUdDiApLIvAFrAb@xAr@lBP~AD~A]xGCf@BPJN^Ll@sCRwCD}CMkAvAJdCT|C\\hCT?`AQfGQhEMhDI`Dx@D"
+         },
+         "summary" : "首都高速6号向島線 and 首都高速都心環状線",
+         "warnings" : [],
+         "waypoint_order" : []
+      }
+   ],
+   "status" : "OK"
+}
