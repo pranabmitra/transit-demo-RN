@@ -2,12 +2,13 @@ import React from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import HTML from 'react-native-render-html';
 
+import CONSTANT from './constant';
+
 const MODE = 'TRANSIT';
-const API_KEY = 'AIzaSyD8_ppn0R1Pd5HsDmTcuFsbolKPSWwg-1g';
+const API_KEY = CONSTANT.API_KEY;
 
 let source = 'Ayase, 3 Chome-1 Ayase, Adachi-ku, Tōkyō-to 120-0005, Japan',
-    destination = '（株）ＢＪＩＴ, Japan, 〒105-0014 Tokyo, Minato, Shiba, 5 Chome−1−13',
-    output = {};
+    destination = '（株）ＢＪＩＴ, Japan, 〒105-0014 Tokyo, Minato, Shiba, 5 Chome−1−13';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -51,23 +52,19 @@ export default class App extends React.Component {
         let index = 0,
             allSteps = [],
             promises = [];
-
-        output.steps = [];
     
         steps.forEach((step) => {
-            // console.log(step);
             let stepObj = {
+                id: index++,
                 distance: step.distance.text,
                 duration: step.duration.text,
                 htmlInstructions: step.html_instructions, // we have to format this property into a HTML format
                 travelMode: step.travel_mode,
             };
     
-            // stepObj.address = this.getPlaceNameByCoordinates(step.start_location);
             promises.push(this.getPlaceNameByCoordinates(step.start_location));
             
             allSteps.push(stepObj);
-            output.steps.push(stepObj);
         });
 
         this.setState({ steps: allSteps });
@@ -79,14 +76,10 @@ export default class App extends React.Component {
             console.log('promise error: ', error);
             this.setState({ hasError: true});
         });
-
-        //this.setState({ steps: allSteps });
     }
     
     processLegsInfo(legs) {
         let data = legs[0]; // don't have any other data
-        output.totalDistance = data.distance.text;
-        output.totalDuration = data.duration.text;
         this.state.totalDistance = data.distance.text;
         this.state.totalDuration = data.duration.text;
     
@@ -99,30 +92,36 @@ export default class App extends React.Component {
                 response,
                 responseJSON;
             
-            console.log(`Direction Url: ${url}`);
+            // console.log(`Direction Url: ${url}`);
             response = await fetch(url);
             responseJSON = await response.json();
     
-            console.log('response: ', responseJSON);
-    
             this.processLegsInfo(responseJSON.routes[0].legs);
-            this.printOutput();
         } catch (error) {
-            console.log('Error: ', error);
+            // console.log('Error: ', error);
             this.setState({ hasError: true});
         }
     }
 
-    printOutput() {
-        console.log('output: ', output);
+    space(){
+        return(
+            <View
+                style={{
+                borderBottomColor: 'black',
+                borderBottomWidth: 1,
+                marginLeft: 5,
+                marginRight: 5
+                }}
+          />
+        )
     }
 
     renderElement() {
-        console.log('Render Element called!');
         if (this.state.steps.length === this.state.addresses.length) {
             return (
                 <FlatList
                     data={this.state.steps}
+                    ItemSeparatorComponent={this.space}
                     showsVerticalScrollIndicator={false}
                     renderItem={({item, index}) =>
                     <View style={styles.flatview}>
@@ -132,18 +131,9 @@ export default class App extends React.Component {
                         <Text style={styles.travelmode}>{item.travelMode}</Text>
                     </View>
                     }
-                    keyExtractor={item => item.key}
+                    keyExtractor={item => item.id.toString()}
                 />
             )
-
-
-            // return this.state.steps.map((step, index) => (
-            //     <View>
-            //         <Text>{this.state.addresses[index]}</Text>
-            //         <Text>Duration: {step.duration}</Text>
-            //         {/* <Text>Travel Mode: {step.travelMode}</Text> */}
-            //     </View>
-            // ))
         }
     }
 
@@ -151,11 +141,14 @@ export default class App extends React.Component {
         return (
         <View style={styles.container}>
             <Text style={styles.h2text}>Transit</Text>
+            
             { this.state.addresses.length > 0 } && 
             (
-                <Text>Total Distance: {this.state.totalDistance}</Text>
-                <Text>Total Duration: {this.state.totalDuration}</Text>
-
+                <Text style={styles.topInfo}>
+                    <Text style={styles.totalDuration}>{this.state.totalDistance} </Text>
+                    <Text style={styles.totalDistance}>({this.state.totalDuration})</Text>
+                </Text>
+                
                 {this.renderElement()};
             )
         </View>
@@ -166,8 +159,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      marginTop: 50,
-      padding: 10,
+      paddingTop: 30,
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: '#F5FCFF',
@@ -178,10 +170,21 @@ const styles = StyleSheet.create({
       fontSize: 24,
       fontWeight: 'bold'
     },
+    topInfo: {
+        marginBottom: 20,
+    },
+    totalDuration: {
+        color: '#f59330',
+    },
+    totalDistance: {
+        color: '#757575',
+    },
     flatview: {
       justifyContent: 'center',
-      paddingTop: 30,
+      paddingTop: 20,
       borderRadius: 2,
+      backgroundColor: '#e8e8e8',
+      padding: 10,
     },
     name: {
       fontFamily: 'Verdana',
