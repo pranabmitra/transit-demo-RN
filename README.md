@@ -12,5 +12,9 @@ $ npm install
 $ expo start
 ```
 
+Output screen:
+
+![alt text](https://github.com/pranabmitra/transit-demo-RN/blob/master/assets/output.png)
+
 [expo]: <https://expo.io/>
 [google-dev-console]: <https://console.developers.google.com/>
