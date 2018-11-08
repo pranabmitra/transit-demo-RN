@@ -16,8 +16,8 @@ export default class App extends React.Component {
         this.state = {
             steps: [],
             addresses: [],
-            totalDistance: null,
-            totalDuration: null,
+            totalDistance: 0,
+            totalDuration: 0,
             hasError: false
         };
     }
@@ -43,7 +43,7 @@ export default class App extends React.Component {
     
             return geocodeJSON.results[0].formatted_address || '';
         } catch (error) {
-            console.log(error);
+            console.log('Error while fetching place info: ', error);
             return ''; // pass an empty string while getting error
         }
     }
@@ -70,7 +70,7 @@ export default class App extends React.Component {
         this.setState({ steps: allSteps });
 
         Promise.all(promises).then((addresses) => {
-            // console.log('address: ', addresses);
+            console.log('address: ', addresses);
             this.setState({ addresses });
         }, (error) => {
             console.log('promise error: ', error);
@@ -98,7 +98,7 @@ export default class App extends React.Component {
     
             this.processLegsInfo(responseJSON.routes[0].legs);
         } catch (error) {
-            // console.log('Error: ', error);
+            console.log('Error while getting directions: ', error);
             this.setState({ hasError: true});
         }
     }
@@ -117,7 +117,7 @@ export default class App extends React.Component {
     }
 
     renderElement() {
-        if (this.state.steps.length === this.state.addresses.length) {
+        if (this.state.addresses.length > 0 && (this.state.steps.length === this.state.addresses.length)) {
             return (
                 <FlatList
                     data={this.state.steps}
@@ -137,22 +137,25 @@ export default class App extends React.Component {
         }
     }
 
+    renderTopInfo() {
+        if (this.state.addresses.length > 0) {
+            return (
+                <View style={styles.topInfo}>
+                    <Text style={styles.totalDuration}>{this.state.totalDistance} </Text>
+                    <Text style={styles.totalDistance}>({this.state.totalDuration})</Text>
+                </View>
+            )
+        }
+    }
+
     render() {
         return (
         <View style={styles.container}>
             <Text style={styles.h2text}>Transit</Text>
-            
-            { this.state.addresses.length > 0 } && 
-            (
-                <Text style={styles.topInfo}>
-                    <Text style={styles.totalDuration}>{this.state.totalDistance} </Text>
-                    <Text style={styles.totalDistance}>({this.state.totalDuration})</Text>
-                </Text>
-                
-                {this.renderElement()};
-            )
+            {this.renderTopInfo()}
+            {this.renderElement()}
         </View>
-        );
+        )
     }
 }
 
@@ -166,7 +169,6 @@ const styles = StyleSheet.create({
     },
     h2text: {
       marginTop: 10,
-      fontFamily: 'Helvetica',
       fontSize: 24,
       fontWeight: 'bold'
     },
@@ -187,7 +189,6 @@ const styles = StyleSheet.create({
       padding: 10,
     },
     name: {
-      fontFamily: 'Verdana',
       fontSize: 18,
       color: '#555555',
       marginBottom: 5,
