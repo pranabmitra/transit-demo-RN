@@ -1,30 +1,38 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, TextInput, View, FlatList } from 'react-native';
 import HTML from 'react-native-render-html';
 
 import CONSTANT from './constant';
+import GooglePlacesInput from './Place';
 
-const MODE = 'TRANSIT';
+const MODE = 'transit';
 const API_KEY = CONSTANT.API_KEY;
+const defaultErrorMessage = 'Something went wrong...';
 
-let source = 'Ayase, 3 Chome-1 Ayase, Adachi-ku, Tōkyō-to 120-0005, Japan',
+let source = 'Tokyo Station, 1 Chome Marunouchi, Chiyoda, Tokyo, Japan',
     destination = '（株）ＢＪＩＴ, Japan, 〒105-0014 Tokyo, Minato, Shiba, 5 Chome−1−13';
+
+// source = 'Biberstraße, 41564 Kaarst, Germany';
+// destination = 'Norf, 41469 Neuss, Germany';
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            source: source,
+            destination: destination,
             steps: [],
             addresses: [],
             totalDistance: 0,
             totalDuration: 0,
-            hasError: false
+            hasError: false,
+            errorText: defaultErrorMessage
         };
     }
 
     componentDidMount() {
-        console.log(source, destination);
-        this.getDirections(source, destination);
+        console.log(this.state.source, this.state.destination);
+        this.getDirections(this.state.source, this.state.destination);
     }
 
     async getPlaceNameByCoordinates(coordinates) {
@@ -70,7 +78,7 @@ export default class App extends React.Component {
         this.setState({ steps: allSteps });
 
         Promise.all(promises).then((addresses) => {
-            console.log('address: ', addresses);
+            // console.log('address: ', addresses);
             this.setState({ addresses });
         }, (error) => {
             console.log('promise error: ', error);
@@ -86,17 +94,41 @@ export default class App extends React.Component {
         this.processSteps(data.steps);
     }
 
+    checkDirectionAPIStatus(response) {
+        switch (response.status) {
+            case 'OK':
+                this.setState({ hasError: false});
+                this.processLegsInfo(response.routes[0].legs);
+                break;
+            case 'OVER_QUERY_LIMIT':
+                // this.setState({ errorText: response.error_message});
+                this.setState({ errorText: 'Something went wrong. Please check API Key validity!'});
+                this.setState({ hasError: true});
+                break;
+            case 'ZERO_RESULTS':
+                this.setState({ errorText: 'No results found for this route using transit mode!'});
+                this.setState({ hasError: true});
+                break;
+            default:
+                this.setState({ errorText: defaultErrorMessage});
+                this.setState({ hasError: true});
+                break;
+        }
+    }
+
     async getDirections(source, destination) {
         try {
             let url = `https://maps.googleapis.com/maps/api/directions/json?origin=${source}&destination=${destination}&mode=${MODE}&key=${API_KEY}`,
                 response,
                 responseJSON;
             
-            // console.log(`Direction Url: ${url}`);
+            console.log(`Direction Url: ${url}`);
             response = await fetch(url);
             responseJSON = await response.json();
-    
-            this.processLegsInfo(responseJSON.routes[0].legs);
+            console.log('response json: ', responseJSON);
+
+            this.checkDirectionAPIStatus(responseJSON);
+            
         } catch (error) {
             console.log('Error while getting directions: ', error);
             this.setState({ hasError: true});
@@ -148,13 +180,58 @@ export default class App extends React.Component {
         }
     }
 
+    onSubmit() {
+        console.log(`Submit: ${this.state.source} - ${this.state.destination}`);
+        this.getDirections(this.state.source, this.state.destination);
+    }
+
+    renderContent() {
+        if (this.state.hasError) {
+            return (
+                <View style={styles.contentWrapper}>
+                    <Text style={styles.error}>{this.state.errorText}</Text>
+                </View>
+            )
+        } else {
+            return (
+                <View style={styles.contentWrapper}>
+                    {this.renderTopInfo()}
+                    {this.renderElement()}
+                </View>
+            )
+        }
+    }
+
     render() {
         return (
-        <View style={styles.container}>
-            <Text style={styles.h2text}>Transit</Text>
-            {this.renderTopInfo()}
-            {this.renderElement()}
-        </View>
+            <View style={styles.container}>
+                <Text style={styles.h2text}>Transit</Text>
+
+                <View style={styles.source}>
+                    {/* <GooglePlacesInput placeholder='source'/> */}
+                    <TextInput
+                        style={{height: 38, padding: 10, borderColor: 'lightgrey', borderWidth: 1}}
+                        placeholder="Source"
+                        value={this.state.source}
+                        onChangeText={(text) => this.setState({source: text})}
+                        onSubmitEditing={() => this.onSubmit()}
+                    />
+                </View>
+
+                <View style={styles.destination}>
+                    {/* <GooglePlacesInput placeholder='destination'/> */}
+                    <TextInput
+                        style={{height: 38, padding: 10, borderColor: 'lightgrey', borderWidth: 1}}
+                        placeholder="Destination"
+                        value={this.state.destination}
+                        onChangeText={(text) => this.setState({destination: text})}
+                        onSubmitEditing={() => this.onSubmit()}
+                    />
+                </View>
+
+                {this.renderContent()}
+            </View>
+        
         )
     }
 }
@@ -162,8 +239,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      paddingTop: 30,
-      justifyContent: 'center',
+      paddingTop: 10,
       alignItems: 'center',
       backgroundColor: '#F5FCFF',
     },
@@ -172,8 +248,31 @@ const styles = StyleSheet.create({
       fontSize: 24,
       fontWeight: 'bold'
     },
+    source: {
+        position: 'absolute',
+        left: 0,
+        top: 50,
+        width: '100%',
+        zIndex: 999,
+        backgroundColor: 'skyblue',
+        //marginTop: 40,
+    },
+    destination: {
+        position: 'absolute',
+        left: 0,
+        top: 90,
+        width: '100%',
+        zIndex: 998,
+        backgroundColor: 'skyblue',
+        //marginTop: 60,
+    },
+    contentWrapper: {
+        marginTop: 100,
+    },
     topInfo: {
-        marginBottom: 20,
+        marginBottom: 10,
+        flexDirection: 'row',
+        justifyContent: 'center',
     },
     totalDuration: {
         color: '#f59330',
@@ -198,6 +297,10 @@ const styles = StyleSheet.create({
     },
     travelmode: {
       color: '#4b4b4b'
+    },
+    error: {
+        padding: 20,
+        fontSize: 12,
     }
     
   });
