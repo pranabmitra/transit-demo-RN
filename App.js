@@ -9,11 +9,8 @@ const MODE = 'transit';
 const API_KEY = CONSTANT.API_KEY;
 const defaultErrorMessage = 'Something went wrong...';
 
-let source = 'Tokyo Station, 1 Chome Marunouchi, Chiyoda, Tokyo, Japan',
-    destination = '（株）ＢＪＩＴ, Japan, 〒105-0014 Tokyo, Minato, Shiba, 5 Chome−1−13';
-
-// source = 'Biberstraße, 41564 Kaarst, Germany';
-// destination = 'Norf, 41469 Neuss, Germany';
+let source = 'Biberstraße, 41564 Kaarst, Germany',
+    destination = 'Norf, 41469 Neuss, Germany';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -285,7 +282,7 @@ const styles = StyleSheet.create({
       paddingTop: 20,
       borderRadius: 2,
       backgroundColor: '#e8e8e8',
-      padding: 10,
+      padding: 20,
     },
     name: {
       fontSize: 18,
