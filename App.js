@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View, FlatList } from 'react-native';
+import { StyleSheet, Text, TextInput, View, FlatList, ScrollView, Image } from 'react-native';
 import HTML from 'react-native-render-html';
 
 import CONSTANT from './constant';
+import helper from './utils/helper';
 import GooglePlacesInput from './Place';
 
 const MODE = 'transit';
@@ -19,83 +20,34 @@ export default class App extends React.Component {
             source: source,
             destination: destination,
             steps: [],
-            addresses: [],
-            totalDistance: 0,
-            totalDuration: 0,
+            basicInfo: {},
             hasError: false,
-            errorText: defaultErrorMessage
+            errorText: defaultErrorMessage,
         };
     }
 
     componentDidMount() {
         console.log(this.state.source, this.state.destination);
+        /* 
+         * To check with sample JSON, turn off the getDirections call 
+         * and turn on the other line: processLegsInfo  
+         ***/
+
         this.getDirections(this.state.source, this.state.destination);
+
+        // this.processLegsInfo();
     }
 
-    async getPlaceNameByCoordinates(coordinates) {
-        try {
-            let latlng = coordinates.lat + ',' + coordinates.lng,
-                url,
-                response,
-                geocodeJSON;
-                
-            url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latlng}&key=${API_KEY}`;
-            // console.log(`Geocode Url: ${url}`);
-            response = await fetch(url);
-            geocodeJSON = await response.json();
-    
-            // console.log('Geocode details: ', geocodeJSON);
-    
-            return geocodeJSON.results[0].formatted_address || '';
-        } catch (error) {
-            console.log('Error while fetching place info: ', error);
-            return ''; // pass an empty string while getting error
-        }
-    }
-    
-    processSteps(steps) {
-        let index = 0,
-            allSteps = [],
-            promises = [];
-    
-        steps.forEach((step) => {
-            let stepObj = {
-                id: index++,
-                distance: step.distance.text,
-                duration: step.duration.text,
-                htmlInstructions: step.html_instructions, // we have to format this property into a HTML format
-                travelMode: step.travel_mode,
-            };
-    
-            promises.push(this.getPlaceNameByCoordinates(step.start_location));
-            
-            allSteps.push(stepObj);
-        });
-
-        this.setState({ steps: allSteps });
-
-        Promise.all(promises).then((addresses) => {
-            // console.log('address: ', addresses);
-            this.setState({ addresses });
-        }, (error) => {
-            console.log('promise error: ', error);
-            this.setState({ hasError: true});
-        });
-    }
-    
-    processLegsInfo(legs) {
-        let data = legs[0]; // don't have any other data
-        this.state.totalDistance = data.distance.text;
-        this.state.totalDuration = data.duration.text;
-    
-        this.processSteps(data.steps);
+    processLegsInfo(leg) {
+        let result = helper(leg);
+        this.setState({ basicInfo: result.basicInfo, steps: result.steps });
     }
 
     checkDirectionAPIStatus(response) {
         switch (response.status) {
             case 'OK':
                 this.setState({ hasError: false});
-                this.processLegsInfo(response.routes[0].legs);
+                this.processLegsInfo(response.routes[0].legs[0]);
                 break;
             case 'OVER_QUERY_LIMIT':
                 // this.setState({ errorText: response.error_message});
@@ -122,7 +74,7 @@ export default class App extends React.Component {
             console.log(`Direction Url: ${url}`);
             response = await fetch(url);
             responseJSON = await response.json();
-            console.log('response json: ', responseJSON);
+            // console.log('response json: ', responseJSON);
 
             this.checkDirectionAPIStatus(responseJSON);
             
@@ -132,102 +84,194 @@ export default class App extends React.Component {
         }
     }
 
-    space(){
+    divider() {
         return(
             <View
                 style={{
-                borderBottomColor: 'black',
-                borderBottomWidth: 1,
-                marginLeft: 5,
-                marginRight: 5
+                    borderBottomColor: 'lightgrey',
+                    borderBottomWidth: 1,
+                    marginTop: 15,
+                    marginBottom: 10,
                 }}
           />
         )
     }
 
-    renderElement() {
-        if (this.state.addresses.length > 0 && (this.state.steps.length === this.state.addresses.length)) {
-            return (
-                <FlatList
-                    data={this.state.steps}
-                    ItemSeparatorComponent={this.space}
-                    showsVerticalScrollIndicator={false}
-                    renderItem={({item, index}) =>
-                    <View style={styles.flatview}>
-                        <Text style={styles.name}>{this.state.addresses[index]}</Text>
-                        <HTML html={item.htmlInstructions} />
-                        <Text style={styles.duration}>{item.duration}</Text>
-                        <Text style={styles.travelmode}>{item.travelMode}</Text>
-                    </View>
-                    }
-                    keyExtractor={item => item.id.toString()}
-                />
-            )
-        }
-    }
-
-    renderTopInfo() {
-        if (this.state.addresses.length > 0) {
-            return (
-                <View style={styles.topInfo}>
-                    <Text style={styles.totalDuration}>{this.state.totalDistance} </Text>
-                    <Text style={styles.totalDistance}>({this.state.totalDuration})</Text>
-                </View>
-            )
-        }
-    }
 
     onSubmit() {
         console.log(`Submit: ${this.state.source} - ${this.state.destination}`);
         this.getDirections(this.state.source, this.state.destination);
     }
 
+    renderLeftPart(step) {
+        let icon = 'https://maps.gstatic.com/mapfiles/transit/iw2/6/walk.png'; // walking image
+
+        if (step.travelMode === CONSTANT.TRAVEL_MODE.TRANSIT) {
+            icon = `https:${step.lineInfo.vehicle.local_icon || step.lineInfo.vehicle.icon}`;
+        }
+
+        return (
+            <View style={styles.leftPartWrapper}>
+                <Text style={{fontWeight: 'bold'}}>{step.time.toUpperCase()}</Text>
+                <View style={{justifyContent: 'center', alignItems: 'center', height: 100}}>
+                    <Image source={{uri: icon}}
+                        style = {{ width: 20, height: 20 }}
+                    />
+                </View>
+            </View>
+        )
+    }
+
+    renderWalkingInnerSteps(innerSteps) {
+        return (
+            <FlatList
+                data={innerSteps}
+                ItemSeparatorComponent={this.divider}
+                showsVerticalScrollIndicator={false}
+                renderItem={({item, index}) =>
+                <View style={{}}>
+                    <HTML html={item} />
+                </View>
+                }
+                keyExtractor={index => index.toString()}
+            />
+        )
+    }
+
+    renderWalkingDetails(step) {
+        return (
+            <View>
+                <Text style={styles.headSign}>{step.headSign}</Text>
+                <Text style={styles.stopsInfo}>About {step.duration}, {step.distance}</Text>
+
+                {step.innerSteps.length && 
+                    <View style={{marginTop: 20}}>
+                        {this.renderWalkingInnerSteps(step.innerSteps)}
+                    </View>
+                }
+            </View>
+        )
+    }
+
+    renderTransitDetails(step) {
+        return (
+            <View>
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={{borderWidth: 2, borderColor: 'black'}}>{step.lineInfo.short_name}</Text>
+                    <Text style={styles.headSign}> {step.headSign}</Text>
+                </View>
+                <Text style={styles.stopsInfo}>{step.duration} ({step.numOfSteps} stops)</Text>
+            </View>
+        )
+    }
+
+    renderRightPart(step) {
+        return (
+            <View style={{flex: 5}}>
+                <Text style={{fontSize: 18, fontWeight: 'bold'}}>{step.name}</Text>
+                {this.divider()}
+                {
+                    step.travelMode === CONSTANT.TRAVEL_MODE.WALKING 
+                    ? this.renderWalkingDetails(step) 
+                    : this.renderTransitDetails(step)
+                }
+            </View>
+        )
+    }
+    
+    lastCircle() {
+        return (
+            <View style={styles.lastOuterCircle}>
+                <View style={styles.lastInnerCircle}></View>
+            </View>
+        )
+    }
+
+    renderMiddlePart(step) {
+        let contentHeight = step.innerSteps ? 120 + step.innerSteps.length * 48 : 120;
+        return (
+            <View style={{flex: 1, height: contentHeight, marginLeft: -30}}>      
+                <View>
+                    <View style={styles.openCircle}></View>
+                    <View style={styles.verticalLine}></View>
+                </View>
+            </View>
+        )
+    }
+
+    renderLastRow(step) {
+        return (
+            <View style={{marginTop: 40, flexDirection: 'row'}} key={step.time}>
+                <View style={styles.leftPartWrapper}>
+                    <Text style={{fontWeight: 'bold'}}>{step.time.toUpperCase()}</Text>
+                </View>
+
+                <View style={styles.lastCircleWrapper}>
+                    {this.lastCircle()}
+                </View>
+
+                <View style={{flex: 5}}>
+                    <Text style={{fontSize: 18, fontWeight: 'bold'}}>{step.name}</Text>
+                </View>
+            </View>
+        )
+    }
+
     renderContent() {
         if (this.state.hasError) {
             return (
-                <View style={styles.contentWrapper}>
+                <View style={styles.errorContentWrapper}>
                     <Text style={styles.error}>{this.state.errorText}</Text>
                 </View>
             )
         } else {
-            return (
-                <View style={styles.contentWrapper}>
-                    {this.renderTopInfo()}
-                    {this.renderElement()}
-                </View>
-            )
+            return this.state.steps.map((step, index) => {
+                if (index === this.state.steps.length -1) {
+                    return (this.renderLastRow(step))
+                } else {
+                    return (
+                        <View style={{marginTop: index === 0 ? 100 : 40, flexDirection: 'row'}} key={step.time}>
+                            {this.renderLeftPart(step)}
+                            {this.renderMiddlePart(step)}
+                            {this.renderRightPart(step)}
+                        </View>
+                    )
+                }
+            });
         }
     }
 
     render() {
         return (
-            <View style={styles.container}>
-                <Text style={styles.h2text}>Transit</Text>
+            <ScrollView>
+                <View style={styles.container}>
+                    <Text style={styles.h2text}>Transit</Text>
 
-                <View style={styles.source}>
-                    {/* <GooglePlacesInput placeholder='source'/> */}
-                    <TextInput
-                        style={{height: 38, padding: 10, borderColor: 'lightgrey', borderWidth: 1}}
-                        placeholder="Source"
-                        value={this.state.source}
-                        onChangeText={(text) => this.setState({source: text})}
-                        onSubmitEditing={() => this.onSubmit()}
-                    />
+                    <View style={styles.source}>
+                        {/* <GooglePlacesInput placeholder='source'/> */}
+                        <TextInput
+                            style={styles.inputField}
+                            placeholder="Source"
+                            value={this.state.source}
+                            onChangeText={(text) => this.setState({source: text})}
+                            onSubmitEditing={() => this.onSubmit()}
+                        />
+                    </View>
+
+                    <View style={styles.destination}>
+                        {/* <GooglePlacesInput placeholder='destination'/> */}
+                        <TextInput
+                            style={styles.inputField}
+                            placeholder="Destination"
+                            value={this.state.destination}
+                            onChangeText={(text) => this.setState({destination: text})}
+                            onSubmitEditing={() => this.onSubmit()}
+                        />
+                    </View>
+
+                    {this.renderContent()}
                 </View>
-
-                <View style={styles.destination}>
-                    {/* <GooglePlacesInput placeholder='destination'/> */}
-                    <TextInput
-                        style={{height: 38, padding: 10, borderColor: 'lightgrey', borderWidth: 1}}
-                        placeholder="Destination"
-                        value={this.state.destination}
-                        onChangeText={(text) => this.setState({destination: text})}
-                        onSubmitEditing={() => this.onSubmit()}
-                    />
-                </View>
-
-                {this.renderContent()}
-            </View>
+            </ScrollView>
         
         )
     }
@@ -252,7 +296,6 @@ const styles = StyleSheet.create({
         width: '100%',
         zIndex: 999,
         backgroundColor: 'skyblue',
-        //marginTop: 40,
     },
     destination: {
         position: 'absolute',
@@ -261,43 +304,66 @@ const styles = StyleSheet.create({
         width: '100%',
         zIndex: 998,
         backgroundColor: 'skyblue',
-        //marginTop: 60,
     },
-    contentWrapper: {
+    inputField: {
+        height: 38,
+        padding: 10,
+        borderColor: 'lightgrey',
+        borderWidth: 1
+    },
+    leftPartWrapper: {
+        flex: 2, 
+        flexDirection: 'column', 
+        paddingLeft: 10
+    },
+    lastCircleWrapper: {
+        flex: 1, 
+        height: 100, 
+        marginLeft: -30,
+    },
+    lastOuterCircle: {
+        height: 20,
+        width: 20, 
+        borderWidth: 3, 
+        borderColor: 'black', 
+        borderRadius: 10,
+    },
+    lastInnerCircle: {
+        height: 8, 
+        width: 8, 
+        backgroundColor: '#333333', 
+        borderRadius: 4, 
+        margin: 3,
+    },
+    openCircle: {
+        height: 20, 
+        width: 20, 
+        borderWidth: 3, 
+        borderColor: '#333333', 
+        borderRadius: 10,
+    },
+    verticalLine: {
+        height: '100%', 
+        marginLeft: 8, 
+        borderLeftWidth: 3, 
+        borderStyle: 'solid', 
+        borderColor: '#1facf2',
+    },
+    headSign: {
+        fontSize: 18, 
+        color: '#4b4b4b',
+    },
+    stopsInfo: {
+        color: '#999999', 
+        marginTop: 5,
+    },
+    errorContentWrapper: {
+        height: '100%',
         marginTop: 100,
-    },
-    topInfo: {
-        marginBottom: 10,
-        flexDirection: 'row',
-        justifyContent: 'center',
-    },
-    totalDuration: {
-        color: '#f59330',
-    },
-    totalDistance: {
-        color: '#757575',
-    },
-    flatview: {
-      justifyContent: 'center',
-      paddingTop: 20,
-      borderRadius: 2,
-      backgroundColor: '#e8e8e8',
-      padding: 20,
-    },
-    name: {
-      fontSize: 18,
-      color: '#555555',
-      marginBottom: 5,
-    },
-    duration: {
-      color: '#999999'
-    },
-    travelmode: {
-      color: '#4b4b4b'
     },
     error: {
         padding: 20,
         fontSize: 12,
-    }
+    },
     
   });
