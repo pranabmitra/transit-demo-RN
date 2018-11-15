@@ -13,6 +13,7 @@ $ expo start
 ```
 
 Output screens:
+
 ![alt text](https://github.com/pranabmitra/transit-demo-RN/blob/master/assets/output-1.png)
 ![alt text](https://github.com/pranabmitra/transit-demo-RN/blob/master/assets/output-2.png)
 ![alt text](https://github.com/pranabmitra/transit-demo-RN/blob/master/assets/output-3.png)
