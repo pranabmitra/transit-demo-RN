@@ -12,7 +12,13 @@ $ npm install
 $ expo start
 ```
 
-Output screen:
+Output screens:
+![alt text](https://github.com/pranabmitra/transit-demo-RN/blob/master/assets/output-1.png)
+![alt text](https://github.com/pranabmitra/transit-demo-RN/blob/master/assets/output-2.png)
+![alt text](https://github.com/pranabmitra/transit-demo-RN/blob/master/assets/output-3.png)
+
+
+If we use _App_bak_listview_, the output screen will be like below:
 
 ![alt text](https://github.com/pranabmitra/transit-demo-RN/blob/master/assets/output.png)
 
