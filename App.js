@@ -33,9 +33,9 @@ export default class App extends React.Component {
          * and turn on the other line: processLegsInfo  
          ***/
 
-        // this.getDirections(this.state.source, this.state.destination);
+        this.getDirections(this.state.source, this.state.destination);
 
-        this.processLegsInfo();
+        // this.processLegsInfo();
     }
 
     processLegsInfo(leg) {
