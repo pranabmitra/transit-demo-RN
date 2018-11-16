@@ -133,7 +133,7 @@ export default class App extends React.Component {
                     <HTML html={item} />
                 </View>
                 }
-                keyExtractor={index => index.toString()}
+                keyExtractor={(item, index) => index.toString()}
             />
         )
     }
@@ -157,7 +157,7 @@ export default class App extends React.Component {
         return (
             <View>
                 <View style={{flexDirection: 'row'}}>
-                    <Text style={{borderWidth: 2, borderColor: 'black'}}>{step.lineInfo.short_name}</Text>
+                    <Text style={{height: 20, borderWidth: 2, borderColor: 'black'}}>{step.lineInfo.short_name}</Text>
                     <Text style={styles.headSign}> {step.headSign}</Text>
                 </View>
                 <Text style={styles.stopsInfo}>{step.duration} ({step.numOfSteps} stops)</Text>
@@ -188,7 +188,7 @@ export default class App extends React.Component {
     }
 
     renderMiddlePart(step) {
-        let contentHeight = step.innerSteps ? 120 + step.innerSteps.length * 48 : 120;
+        let contentHeight = step.innerSteps ? 150 + step.innerSteps.length * 50 : 150;
         return (
             <View style={{flex: 1, height: contentHeight, marginLeft: -30}}>      
                 <View>
